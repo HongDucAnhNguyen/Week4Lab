@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/nguye/OneDrive/Documents/NetBeansProjects/Week4Lab_SimpleNoteKeeper/src/java/models/Note.java</file>
+            <file>file:/C:/Users/nguye/OneDrive/Documents/NetBeansProjects/Week4Lab_SimpleNoteKeeper/web/WEB-INF/jsp/viewnote.jsp</file>
+            <file>file:/C:/Users/nguye/OneDrive/Documents/NetBeansProjects/Week4Lab_SimpleNoteKeeper/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/nguye/OneDrive/Documents/NetBeansProjects/Week4Lab_SimpleNoteKeeper/web/WEB-INF/note.txt</file>
+            <file>file:/C:/Users/nguye/OneDrive/Documents/NetBeansProjects/Week4Lab_SimpleNoteKeeper/src/java/servlets/NoteServlet.java</file>
+            <file>file:/C:/Users/nguye/OneDrive/Documents/NetBeansProjects/Week4Lab_SimpleNoteKeeper/web/WEB-INF/jsp/editnote.jsp</file>
+        </group>
+    </open-files>
+</project-private>
