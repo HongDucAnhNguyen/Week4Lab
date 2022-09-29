@@ -31,16 +31,22 @@ public class NoteServlet extends HttpServlet {
             String path = getServletContext().getRealPath("/WEB-INF/note.txt");
 // to read files
             BufferedReader br = new BufferedReader(new FileReader(new File(path)));
+            //read text files and set values 
             String title = br.readLine();
             String content = br.readLine();
-
+            br.close();
+            //put values into note obj
             Note note = new Note(title, content);
+            //set note in req
             req.setAttribute("note", note);
 
+            //check if editpage is valid
             String editPage = req.getParameter("edit");
             if (editPage != null) {
+                //redirects user to edit page
                 getServletContext().getRequestDispatcher("/WEB-INF/jsp/editnote.jsp").forward(req, res);
             } else {
+                //redirects user to view page
                 getServletContext().getRequestDispatcher("/WEB-INF/jsp/viewnote.jsp").forward(req, res);
             }
 
@@ -53,29 +59,37 @@ public class NoteServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String path = getServletContext().getRealPath("/WEB-INF/note.txt");
-        String title = request.getParameter("title");
-        String content = request.getParameter("content");
-        PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(path, false)));
+        try {
+            String path = getServletContext().getRealPath("/WEB-INF/note.txt");
+            String title = request.getParameter("title");
+            String content = request.getParameter("content");
+            PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(path, false)));
 
-        if (title == null || title.equals("") || content == null || content.equals("")) {
-            request.setAttribute("title", title);
-            request.setAttribute("content", content);
+            //if contents not filled return error message
+            if (title == null || title.equals("") || content == null || content.equals("")) {
+                request.setAttribute("title", title);
+                request.setAttribute("content", content);
 
-            request.setAttribute("message", "invalid entry, please fill out the form");
+                request.setAttribute("message", "invalid entry, please fill out the form");
 
-            getServletContext().getRequestDispatcher("/WEB-INF/jsp/editnote.jsp")
+                getServletContext().getRequestDispatcher("/WEB-INF/jsp/editnote.jsp")
+                        .forward(request, response);
+                return;
+            }
+
+            Note note = new Note(title, content);
+            //set note in req
+            request.setAttribute("note", note);
+            //write new data into txt file
+            pw.println(note.getTitle());
+            pw.println(note.getContent());
+            pw.close();
+            //redirects user back to view page
+            getServletContext().getRequestDispatcher("/WEB-INF/jsp/viewnote.jsp")
                     .forward(request, response);
-            return;
+        } catch (FileNotFoundException fileNotFound) {
+            System.out.println(fileNotFound);
         }
-
-        Note note = new Note(title, content);
-        request.setAttribute("note", note);
-        pw.println(note.getTitle());
-        pw.println(note.getContent());
-        pw.close();
-        getServletContext().getRequestDispatcher("/WEB-INF/jsp/viewnote.jsp")
-                .forward(request, response);
     }
 
 }
