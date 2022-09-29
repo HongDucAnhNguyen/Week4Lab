@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import models.Note;
 
 /**
  *
@@ -33,8 +34,9 @@ public class NoteServlet extends HttpServlet {
             String title = br.readLine();
             String content = br.readLine();
 
-            req.setAttribute("title", title);
-            req.setAttribute("content", content);
+            Note note = new Note(title, content);
+            req.setAttribute("note", note);
+
             String editPage = req.getParameter("edit");
             if (editPage != null) {
                 getServletContext().getRequestDispatcher("/WEB-INF/jsp/editnote.jsp").forward(req, res);
@@ -46,6 +48,34 @@ public class NoteServlet extends HttpServlet {
             System.out.println(fileNotFound);
         }
 
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String path = getServletContext().getRealPath("/WEB-INF/note.txt");
+        String title = request.getParameter("title");
+        String content = request.getParameter("content");
+        PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(path, false)));
+
+        if (title == null || title.equals("") || content == null || content.equals("")) {
+            request.setAttribute("title", title);
+            request.setAttribute("content", content);
+
+            request.setAttribute("message", "invalid entry, please fill out the form");
+
+            getServletContext().getRequestDispatcher("/WEB-INF/jsp/editnote.jsp")
+                    .forward(request, response);
+            return;
+        }
+
+        Note note = new Note(title, content);
+        request.setAttribute("note", note);
+        pw.println(note.getTitle());
+        pw.println(note.getContent());
+        pw.close();
+        getServletContext().getRequestDispatcher("/WEB-INF/jsp/viewnote.jsp")
+                .forward(request, response);
     }
 
 }

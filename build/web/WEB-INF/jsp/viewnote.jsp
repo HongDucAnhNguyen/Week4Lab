@@ -16,9 +16,9 @@
         <h3>
             View Note
         </h3>
-        <h5>Title: ${title}</h5>
+        <h5>Title:  ${note.title}</h5>
         
-        <h5>Contents: ${content}</h5>
+        <h5>Contents: ${note.content}</h5>
         
         <!--href points back to note url but includes edit into param-->
         <a href="note?edit" name="edit">Edit</a>
